@@ -20,5 +20,6 @@ script:
   - export PATH=/foo/bar:${PATH}
 after_success:
   - echo ${PATH}
+  - find /usr /opt -name "nosetests*" || true
   - which nosetests-2.7
   - which nosetests
