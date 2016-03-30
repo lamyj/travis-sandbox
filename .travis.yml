@@ -11,7 +11,7 @@ matrix:
       compiler: clang
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install python; fi
-  - pip install --user nose
+  #- pip install --user nose
   - ls -aR ${HOME}/.local
 script:
   - echo ${TRAVIS_OS_NAME}
@@ -20,3 +20,4 @@ script:
   - export PATH=/foo/bar:${PATH}
 after_success:
   - echo ${PATH}
+  - which nosetests-2.7
