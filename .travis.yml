@@ -11,12 +11,12 @@ matrix:
       compiler: clang
 before_install:
   #- if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install python; brew link --overwrite python; fi
-  #- pip install --user nose
+  - pip install --user nose
   #- ls -aR ${HOME}/.local
 script:
   - echo ${TRAVIS_OS_NAME}
   - echo ${PATH}
-  - find /usr /opt -name "libpython2.7*" || true
+  - find /usr /opt -name "libpython?.?*" || true
   - export PATH=/foo/bar:${PATH}
 after_success:
   - echo ${PATH}
