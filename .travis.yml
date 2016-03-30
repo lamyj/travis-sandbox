@@ -18,6 +18,7 @@ script:
   #- echo ${TRAVIS_OS_NAME}
   #- echo ${PATH}
   - find /usr /opt -name "libpython?.?*" || true
+  - cmake .
 after_success:
   - echo ${PATH}
   #- find /usr /opt ${HOME} -name "nosetests*" || true
