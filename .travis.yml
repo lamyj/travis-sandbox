@@ -12,7 +12,7 @@ matrix:
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install python; fi
   #- pip install --user nose
-  - ls -aR ${HOME}/.local
+  #- ls -aR ${HOME}/.local
 script:
   - echo ${TRAVIS_OS_NAME}
   - echo ${PATH}
