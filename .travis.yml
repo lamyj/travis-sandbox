@@ -1,0 +1,14 @@
+language: cpp
+python:
+  - "2.7"
+matrix:
+  include:
+    - os: linux
+      sudo: required
+      dist: trusty
+      compiler: gcc
+    - os: osx
+      compiler: clang
+script:
+  - echo ${TRAVIS_OS_NAME}
+  - find /usr /opt -name "libpython2.7.so"
