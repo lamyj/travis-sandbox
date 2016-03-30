@@ -10,7 +10,7 @@ matrix:
     - os: osx
       compiler: clang
 before_install:
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install python; brew link --overwrite python; fi
+  #- if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install python; brew link --overwrite python; fi
   #- pip install --user nose
   #- ls -aR ${HOME}/.local
 script:
@@ -21,3 +21,4 @@ script:
 after_success:
   - echo ${PATH}
   - which nosetests-2.7
+  - which nosetests
