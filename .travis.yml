@@ -10,9 +10,13 @@ matrix:
     - os: osx
       compiler: clang
 before_install:
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install python; fi
   - pip install --user nose
-  - ls -aR
+  - ls -aR ${HOME}/.local
 script:
   - echo ${TRAVIS_OS_NAME}
   - echo ${PATH}
-  - find /usr /opt -name "libpython2.7.so"
+  - find /usr /opt -name "libpython2.7.so" || true
+  - export PATH=/foo/bar:${PATH}
+after_success:
+  - echo ${PATH}
