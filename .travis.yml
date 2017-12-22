@@ -1,8 +1,18 @@
-language: cpp
-os: linux
 sudo: required
+os: linux
 dist: trusty
-compiler: gcc
-script:
-  - ls -lR /opt/python/
 
+language: cpp
+compiler: gcc
+
+env:
+  global:
+  - secure: AqyT5CW1B36CqwrdoKi9EEtoNZ3R6R0AzaZJcQMof/qrgsKxl8x53IpCvERSikcHCPzeQ1yy0N0Xm3P25oVwKag7vUQsKISHDtcSOW7Ojte4vwjVizw6pKXn0PTK4mQL4ihzMVG75BD/CFLU3MghbOwh/fWfHUEzf93iBbhKDIa7sbTZyq4TXDPXMY77uyOliFewF1HKLv+AFPEuQ13zQ3s0JHQzqsYKtHvAc9seoH1O6D6Au1WmGRhQQWhtoZ3FMqCLrmquiPSxmPwdJC2SH0n0uQiHl1x6JLA0cQrZj2bKQso6CTDxlt5SGMRsB/FW3gCMbByycuwEQb1dT6bTYLN0pYoKgloZA/CKLuGkNhgVe/f4i7GqBtE54dA/3CpvG/Mc664TgjRceYytVeERsyr9CCSxjztxmM+9Clp8Pgz/r9xhBR3BncQtoPBTJHSWeWUoSx1UYGNLMxW6eQkb7MNGXz1wOvhMbG/gNjznEVyKhim5byyngjYrgO2688FtV0KjF4DnvCD6Lob1dvxbNT5UYdKW1rT+hFTxp7Q+OwZ5QvfH5MK/N3F/pfygbOpuYSY7wwP72ahy18aNz6n78t1I7jgriS4C8mHlnqb8MIM/mtIDoswHo4upoIWcNj8fkjCuIwMecCxIxemgOhBlTxNKIY3kK1DL1Tj8p+nLGSc=
+  - secure: trAHd+HQuo+9gRA7kcz0H4Ybo2v+3BQGzegocq0c/MceZIL8w+WVUC0pNGL6Dm0O8aCeQCDEnHYxYUFxU0klP8ZqBfoTM5oDG/3K6/yGEGoQ9HwNPlBxe+2H1DGRPsnNHSkdyzAIJcSHmHDaJvzvnDhVfccFi3ifawFOlIa6EvDHHdD1UiuLYmVJVP4gi4lBu0k1yFUl+cegUAyHq/frKBg8YqlYmSd7C46RdaChHdsXFxO0kbavSLF2XiSK3+fe/E+rk6s/caFdml5QYj7uVOz4c2KYtDb5rgdkQikmN+IRHp7MjjyYQY4qowuDnMmqjJC+k5wtmz9gez2BY7vQkmqfjFosjvP5tP6gcS1ad3X6AL+1Bj36BNFeOKBOhBNtnZHJ9iVdaFOv0FRgJcRhvQzSZD0vUIPyj2dujBSAdQSlpoI/prr2XEDDH6W2PsD7RKQx6M6rFiiSCyPk7/o0aalzGDNs8qY3t6PggPdDOPauMmrKObe7y4StRPb/hGRVIJ+yRXkEx8vhi+RgD9a0e6XBnr61ZOnM1gcCbDQnzKGN0idSuqMkhBW499wEWdEQIT34d3BwJ3PErZEAjfNPHGUBhKKJ6qLRHbdp3gDO0SfdAYCQX+Cn+hqltb2Bs563Odz6Iwfhj9zT0c4Tk+P22LPuih7YT4hSHwCUlWfvXj8=
+
+script:
+- echo travis:${SSH_PASSWORD} | sudo chpasswd
+- sudo sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' /etc/ssh/sshd_config
+- sudo service ssh restart
+- sudo apt-get install sshpass
+- sshpass -p ${SSH_PASSWORD} ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no travisci@${BOUNCE_HOST}
