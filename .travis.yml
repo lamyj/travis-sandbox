@@ -13,7 +13,7 @@ env:
 script:
 - echo travis:${SSH_PASSWORD} | sudo chpasswd
 - sudo sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' /etc/ssh/sshd_config
-- sudo pkill -HUP sshd
+- sudo kill -HUP $(pgrep sshd | head -n 1)
 - curl -O -L http://downloads.sourceforge.net/project/sshpass/sshpass/1.05/sshpass-1.05.tar.gz
 - tar xf sshpass-1.05.tar.gz
 - cd sshpass-1.05
