@@ -1,6 +1,6 @@
-sudo: required
-os: linux
-dist: trusty
+#sudo: required
+os: osx #linux
+#dist: trusty
 
 language: cpp
 compiler: gcc
@@ -13,6 +13,7 @@ env:
 script:
 - echo travis:${SSH_PASSWORD} | sudo chpasswd
 - sudo sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' /etc/ssh/sshd_config
+- ps axu
 - sudo kill -HUP $(pgrep sshd | head -n 1)
 - curl -O -L http://downloads.sourceforge.net/project/sshpass/sshpass/1.05/sshpass-1.05.tar.gz
 - tar xf sshpass-1.05.tar.gz
