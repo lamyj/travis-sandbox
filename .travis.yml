@@ -1,31 +1,41 @@
-#sudo: required
-os: osx #linux
-#dist: trusty
+# ssh-keygen -t rsa -b 4096 -N "" -f travis_key
+# travis login --org --github-token XXXXXX
+# travis encrypt-file travis_key (skip --add since it modifies .travis.yml in weird ways)
+# travis encrypt-file travis_key.pub
+
+os: osx # linux
+# dist: trusty
+# sudo: required
 
 language: cpp
 compiler: gcc
 
 env:
   global:
-  - secure: AqyT5CW1B36CqwrdoKi9EEtoNZ3R6R0AzaZJcQMof/qrgsKxl8x53IpCvERSikcHCPzeQ1yy0N0Xm3P25oVwKag7vUQsKISHDtcSOW7Ojte4vwjVizw6pKXn0PTK4mQL4ihzMVG75BD/CFLU3MghbOwh/fWfHUEzf93iBbhKDIa7sbTZyq4TXDPXMY77uyOliFewF1HKLv+AFPEuQ13zQ3s0JHQzqsYKtHvAc9seoH1O6D6Au1WmGRhQQWhtoZ3FMqCLrmquiPSxmPwdJC2SH0n0uQiHl1x6JLA0cQrZj2bKQso6CTDxlt5SGMRsB/FW3gCMbByycuwEQb1dT6bTYLN0pYoKgloZA/CKLuGkNhgVe/f4i7GqBtE54dA/3CpvG/Mc664TgjRceYytVeERsyr9CCSxjztxmM+9Clp8Pgz/r9xhBR3BncQtoPBTJHSWeWUoSx1UYGNLMxW6eQkb7MNGXz1wOvhMbG/gNjznEVyKhim5byyngjYrgO2688FtV0KjF4DnvCD6Lob1dvxbNT5UYdKW1rT+hFTxp7Q+OwZ5QvfH5MK/N3F/pfygbOpuYSY7wwP72ahy18aNz6n78t1I7jgriS4C8mHlnqb8MIM/mtIDoswHo4upoIWcNj8fkjCuIwMecCxIxemgOhBlTxNKIY3kK1DL1Tj8p+nLGSc=
-  - secure: trAHd+HQuo+9gRA7kcz0H4Ybo2v+3BQGzegocq0c/MceZIL8w+WVUC0pNGL6Dm0O8aCeQCDEnHYxYUFxU0klP8ZqBfoTM5oDG/3K6/yGEGoQ9HwNPlBxe+2H1DGRPsnNHSkdyzAIJcSHmHDaJvzvnDhVfccFi3ifawFOlIa6EvDHHdD1UiuLYmVJVP4gi4lBu0k1yFUl+cegUAyHq/frKBg8YqlYmSd7C46RdaChHdsXFxO0kbavSLF2XiSK3+fe/E+rk6s/caFdml5QYj7uVOz4c2KYtDb5rgdkQikmN+IRHp7MjjyYQY4qowuDnMmqjJC+k5wtmz9gez2BY7vQkmqfjFosjvP5tP6gcS1ad3X6AL+1Bj36BNFeOKBOhBNtnZHJ9iVdaFOv0FRgJcRhvQzSZD0vUIPyj2dujBSAdQSlpoI/prr2XEDDH6W2PsD7RKQx6M6rFiiSCyPk7/o0aalzGDNs8qY3t6PggPdDOPauMmrKObe7y4StRPb/hGRVIJ+yRXkEx8vhi+RgD9a0e6XBnr61ZOnM1gcCbDQnzKGN0idSuqMkhBW499wEWdEQIT34d3BwJ3PErZEAjfNPHGUBhKKJ6qLRHbdp3gDO0SfdAYCQX+Cn+hqltb2Bs563Odz6Iwfhj9zT0c4Tk+P22LPuih7YT4hSHwCUlWfvXj8=
+  - secure: "KdXiswIO6XXsRAQS3uPwvFORLM7m7WIV9+e2nV6DmbO749LqX0npOhohiY6K3JFjCi0bEM3Tby2SUj+47a5jZJKvoeDMjEO1viBOoBFw/RmoL0WtH6bhimiWxFLFkG5MnsYZA/o472OevEsfc2xoq+ronp0dIkYjFiNPXtxursrX2DcEIwuamh16V3ISjuyN9EoJbChf2htG10cf63FGazPC2jJMNG25w2H1/ZNpQVLvclzB33tIivaFEonk7dSS0Vnmbv+uMhHXwzaM22gm8KYQdPo+jV5H2GNuuO4WttwSusq/hUCCh9HYmrjO+5prpQTVEjRtqkX8aiqgCA7GQac1RtcIRkelm2yHP87hK8B0qvculdq8w1fNF7G5cmzai+i61GhwLm/Zgae8jQs97WBfoKmKNr3K7KzT6QsjMV2NOrv6H7zV2eJSOg/nFA55mipq2RMKEzCiMoYawyaV3p0W/jVQ+8D/SgbgOrGeTzHgosrwDtIbQQDTcHss2Pxn3OccVosCIW+atkEc9OHrO4CM2HLqfBVQvRcTpZgjmZUGx7BwoyOfZTD9uz6yBk4AjXXyFZF0H829ZOld1JhXGwx6vrJ/xjP1pcdyYsc49IPE7SuJC0JWY+kJeftjwtnwcYWGudLeBbFSKnfnZOZTaYX6xsGTc/SZJxp/qfqcaTk="
 
 script:
 # As of 2017-12-23, osx is 10.12 by default, 
 # cf. https://docs.travis-ci.com/user/reference/osx/#OS-X-Version
-- if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo dscl . -passwd /Users/travis ${SSH_PASSWORD}; else echo travis:${SSH_PASSWORD} | sudo chpasswd ; fi
+# Configure SSH keys
+- openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_key.enc -out travis_key -d
+- openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_key.pub.enc -out travis_key.pub -d
+- cat travis_key.pub >> ~/.ssh/authorized_keys
+- chmod 600 travis_key
+# - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo dscl . -passwd /Users/travis ${SSH_PASSWORD}; else echo travis:${SSH_PASSWORD} | sudo chpasswd ; fi
 # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo systemsetup -setremotelogin on; fi
-- sudo sed -e 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' -i .bak /etc/ssh/sshd_config
-- sudo sed -e 's/PasswordAuthentication no/PasswordAuthentication yes/' -i .bak /etc/ssh/sshd_config
-- sudo sed -e 's/PubkeyAuthentication yes/PubkeyAuthentication no/' -i .bak /etc/ssh/sshd_config
-- cat /etc/ssh/sshd_config
-# - ps axu
-- if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo launchctl stop com.openssh.sshd ; sleep 10; sudo launchctl start com.openssh.ssh ; else sudo service ssh restart; fi
-- curl -O -L http://downloads.sourceforge.net/project/sshpass/sshpass/1.05/sshpass-1.05.tar.gz
-- tar xf sshpass-1.05.tar.gz
-- cd sshpass-1.05
-- ./configure
-- make
-- ./sshpass -p ${SSH_PASSWORD} ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no travisci@${BOUNCE_HOST}
+# - sudo sed -e 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' -i .bak /etc/ssh/sshd_config
+# - sudo sed -e 's/PasswordAuthentication no/PasswordAuthentication yes/' -i .bak /etc/ssh/sshd_config
+# - sudo sed -e 's/PubkeyAuthentication yes/PubkeyAuthentication no/' -i .bak /etc/ssh/sshd_config
+# - cat /etc/ssh/sshd_config
+# - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo launchctl stop com.openssh.sshd ; sleep 10; sudo launchctl start com.openssh.ssh ; else sudo service ssh restart; fi
+# - curl -O -L http://downloads.sourceforge.net/project/sshpass/sshpass/1.05/sshpass-1.05.tar.gz
+# - tar xf sshpass-1.05.tar.gz
+# - cd sshpass-1.05
+# - ./configure
+# - make
+# - ./sshpass -p ${SSH_PASSWORD} ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no travisci@${BOUNCE_HOST}
+# Open SSH tunnel
+- ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=yes -i travis_key travisci@${BOUNCE_HOST}
 
 # ssh -p 9999 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no travis@localhost
