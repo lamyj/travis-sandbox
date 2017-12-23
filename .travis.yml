@@ -22,6 +22,7 @@ script:
 - openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_key.pub.enc -out travis_key.pub -d
 - cat travis_key.pub >> ~/.ssh/authorized_keys
 - chmod 600 travis_key
+- ls -laR
 # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo dscl . -passwd /Users/travis ${SSH_PASSWORD}; else echo travis:${SSH_PASSWORD} | sudo chpasswd ; fi
 # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo systemsetup -setremotelogin on; fi
 # - sudo sed -e 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' -i .bak /etc/ssh/sshd_config
@@ -36,6 +37,6 @@ script:
 # - make
 # - ./sshpass -p ${SSH_PASSWORD} ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no travisci@${BOUNCE_HOST}
 # Open SSH tunnel
-- ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=yes -i travis_key travisci@${BOUNCE_HOST}
+# - ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=yes -i travis_key travisci@${BOUNCE_HOST}
 
 # ssh -p 9999 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no travis@localhost
