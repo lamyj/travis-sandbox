@@ -16,6 +16,7 @@ script:
 - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo dscl . -passwd /Users/travis ${SSH_PASSWORD}; else echo travis:${SSH_PASSWORD} | sudo chpasswd ; fi
 # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo systemsetup -setremotelogin on; fi
 - sudo sed -e 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' -i .bak /etc/ssh/sshd_config
+- sudo sed -e 's/PasswordAuthentication no/PasswordAuthentication yes/' -i .bak /etc/ssh/sshd_config
 - cat /etc/ssh/sshd_config
 # - ps axu
 - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo launchctl stop com.openssh.sshd ; sleep 10; sudo launchctl start com.openssh.ssh ; else sudo service ssh restart; fi
