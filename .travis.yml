@@ -1,7 +1,7 @@
 # ssh-keygen -t rsa -b 4096 -N "" -f travis_key
+# tar -c -f travis_keys.tar travis_key travis_key.pub
 # travis login --org --github-token XXXXXX
-# travis encrypt-file travis_key (skip --add since it modifies .travis.yml in weird ways)
-# travis encrypt-file travis_key.pub
+# travis encrypt-file travis_key.tar (skip --add since it modifies .travis.yml in weird ways)
 
 os: osx # linux
 # dist: trusty
@@ -18,11 +18,11 @@ script:
 # As of 2017-12-23, osx is 10.12 by default, 
 # cf. https://docs.travis-ci.com/user/reference/osx/#OS-X-Version
 # Configure SSH keys
-- openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_key.enc -out travis_key -d
-- openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_key.pub.enc -out travis_key.pub -d
+- openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_keys.tar.enc -out travis_keys.tar -d
+- tar -x -f travis_keys.tar
 - cat travis_key.pub >> ~/.ssh/authorized_keys
 - chmod 600 travis_key
-- ls -laR
+- ls -laR ~/
 # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo dscl . -passwd /Users/travis ${SSH_PASSWORD}; else echo travis:${SSH_PASSWORD} | sudo chpasswd ; fi
 # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo systemsetup -setremotelogin on; fi
 # - sudo sed -e 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' -i .bak /etc/ssh/sshd_config
