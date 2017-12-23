@@ -11,8 +11,8 @@ env:
   - secure: trAHd+HQuo+9gRA7kcz0H4Ybo2v+3BQGzegocq0c/MceZIL8w+WVUC0pNGL6Dm0O8aCeQCDEnHYxYUFxU0klP8ZqBfoTM5oDG/3K6/yGEGoQ9HwNPlBxe+2H1DGRPsnNHSkdyzAIJcSHmHDaJvzvnDhVfccFi3ifawFOlIa6EvDHHdD1UiuLYmVJVP4gi4lBu0k1yFUl+cegUAyHq/frKBg8YqlYmSd7C46RdaChHdsXFxO0kbavSLF2XiSK3+fe/E+rk6s/caFdml5QYj7uVOz4c2KYtDb5rgdkQikmN+IRHp7MjjyYQY4qowuDnMmqjJC+k5wtmz9gez2BY7vQkmqfjFosjvP5tP6gcS1ad3X6AL+1Bj36BNFeOKBOhBNtnZHJ9iVdaFOv0FRgJcRhvQzSZD0vUIPyj2dujBSAdQSlpoI/prr2XEDDH6W2PsD7RKQx6M6rFiiSCyPk7/o0aalzGDNs8qY3t6PggPdDOPauMmrKObe7y4StRPb/hGRVIJ+yRXkEx8vhi+RgD9a0e6XBnr61ZOnM1gcCbDQnzKGN0idSuqMkhBW499wEWdEQIT34d3BwJ3PErZEAjfNPHGUBhKKJ6qLRHbdp3gDO0SfdAYCQX+Cn+hqltb2Bs563Odz6Iwfhj9zT0c4Tk+P22LPuih7YT4hSHwCUlWfvXj8=
 
 script:
-- [ "$TRAVIS_OS_NAME" = "osx" ] && sudo dscl -passwd travis ${SSH_PASSWORD} || (echo travis:${SSH_PASSWORD} | sudo chpasswd)
-- [ "$TRAVIS_OS_NAME" = "osx" ] && sudo systemsetup -setremotelogin on
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo dscl -passwd travis ${SSH_PASSWORD}; else echo travis:${SSH_PASSWORD} | sudo chpasswd ; fi
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo systemsetup -setremotelogin on; fi
 - sudo sed -e 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' -i /etc/ssh/sshd_config
 - ps axu
 - sudo kill -HUP $(pgrep sshd | head -n 1)
