@@ -16,8 +16,9 @@ script:
 - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo dscl . -passwd /Users/travis ${SSH_PASSWORD}; else echo travis:${SSH_PASSWORD} | sudo chpasswd ; fi
 # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo systemsetup -setremotelogin on; fi
 - sudo sed -e 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/' -i .bak /etc/ssh/sshd_config
-- ps axu
-- if [ "$TRAVIS_OS_NAME" = "osx" ]; then launchctl kickstart -k com.openssh.sshd ; else sudo service ssh restart; fi
+- cat /etc/ssh/sshd_config
+# - ps axu
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo launchctl stop com.openssh.sshd ; sudo launchctl start com.openssh.ssh ; else sudo service ssh restart; fi
 - curl -O -L http://downloads.sourceforge.net/project/sshpass/sshpass/1.05/sshpass-1.05.tar.gz
 - tar xf sshpass-1.05.tar.gz
 - cd sshpass-1.05
