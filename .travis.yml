@@ -2,6 +2,8 @@ os: osx #linux
 #dist: trusty
 #sudo: required
 
+env: Python=2 WORKSPACE=${TRAVIS_BUILD_DIR} MAKE_OPTIONS="-j$(sysctl -n hw.ncpu)"
+
 language: cpp
 compiler: gcc
 
