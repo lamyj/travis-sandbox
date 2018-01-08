@@ -13,6 +13,7 @@ env:
 
 script:
   - python -V
+  - which python
   - ./install
 # # Configure SSH keys
 # - openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_keys.tar.enc -out travis_keys.tar -d

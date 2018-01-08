@@ -7,6 +7,10 @@ import os
 import subprocess
 import sys
 
+print(os.environ)
+for key, value in sorted(os.environ.items()):
+    print(key, value)
+
 brew_conflicting = ["json-c"]
 brew_required = [
     "boost", "boost-python", "cmake", "cppcheck", "dcmtk", "icu4c", "jsoncpp",
