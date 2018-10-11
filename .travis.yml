@@ -2,15 +2,19 @@ language: minimal
 sudo: required
 services:
   - docker
+env:
+  - distribution: debian
+    version: stretch
+  - distribution: debian
+    version: jessie
 before_install:
-  - docker run -di -v ${TRAVIS_BUILD_DIR}:${TRAVIS_BUILD_DIR} --name odil --rm debian:stretch
+  - docker run -di -e TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR} -v ${TRAVIS_BUILD_DIR}:${TRAVIS_BUILD_DIR} --name ${distribution}_${version} --rm ${distribution}:${version}
 install:
-  - docker exec odil cat /etc/debian_version
+  - docker exec ${distribution}_${version} cat /etc/debian_version
 script:
-  - docker exec odil ls ${TRAVIS_BUILD_DIR}
-  - docker exec odil ls /nothing_here
+  - docker exec ${distribution}_${version} ls ${TRAVIS_BUILD_DIR}
 after_success:
-  - docker kill odil
+  - docker kill ${distribution}_${version}
 
 # os: osx #linux
 # #dist: trusty
