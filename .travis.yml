@@ -2,38 +2,17 @@ language: minimal
 sudo: required
 services:
   - docker
-env:
-  - distribution: debian
-    version: stretch
-  - distribution: debian
-    version: jessie
+matrix:
+  include:
+    - name: "Debian Stretch, Python 2"
+      env: { distribution: debian, version: stretch }
+    - name: "Debian Jessie, Python 2"
+      env: { distribution: debian, version: jessie }
 before_install:
-  - docker run -di -e TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR} -v ${TRAVIS_BUILD_DIR}:${TRAVIS_BUILD_DIR} --name ${distribution}_${version} --rm ${distribution}:${version}
+  - docker run -di -v ${TRAVIS_BUILD_DIR}:${TRAVIS_BUILD_DIR} --name ${distribution}_${version} --rm ${distribution}:${version}
 install:
   - docker exec ${distribution}_${version} cat /etc/debian_version
 script:
   - docker exec ${distribution}_${version} ls ${TRAVIS_BUILD_DIR}
 after_success:
   - docker kill ${distribution}_${version}
-
-# os: osx #linux
-# #dist: trusty
-# #sudo: required
-# 
-# # env: Python=2 WORKSPACE=${TRAVIS_BUILD_DIR} MAKE_OPTIONS="-j$(sysctl -n hw.ncpu)"
-# 
-# language: cpp
-# compiler: gcc
-# 
-# env:
-#   global:
-#   - secure: "KdXiswIO6XXsRAQS3uPwvFORLM7m7WIV9+e2nV6DmbO749LqX0npOhohiY6K3JFjCi0bEM3Tby2SUj+47a5jZJKvoeDMjEO1viBOoBFw/RmoL0WtH6bhimiWxFLFkG5MnsYZA/o472OevEsfc2xoq+ronp0dIkYjFiNPXtxursrX2DcEIwuamh16V3ISjuyN9EoJbChf2htG10cf63FGazPC2jJMNG25w2H1/ZNpQVLvclzB33tIivaFEonk7dSS0Vnmbv+uMhHXwzaM22gm8KYQdPo+jV5H2GNuuO4WttwSusq/hUCCh9HYmrjO+5prpQTVEjRtqkX8aiqgCA7GQac1RtcIRkelm2yHP87hK8B0qvculdq8w1fNF7G5cmzai+i61GhwLm/Zgae8jQs97WBfoKmKNr3K7KzT6QsjMV2NOrv6H7zV2eJSOg/nFA55mipq2RMKEzCiMoYawyaV3p0W/jVQ+8D/SgbgOrGeTzHgosrwDtIbQQDTcHss2Pxn3OccVosCIW+atkEc9OHrO4CM2HLqfBVQvRcTpZgjmZUGx7BwoyOfZTD9uz6yBk4AjXXyFZF0H829ZOld1JhXGwx6vrJ/xjP1pcdyYsc49IPE7SuJC0JWY+kJeftjwtnwcYWGudLeBbFSKnfnZOZTaYX6xsGTc/SZJxp/qfqcaTk="
-# 
-# script:
-# # Configure SSH keys
-# - openssl aes-256-cbc -K $encrypted_d7f434807f41_key -iv $encrypted_d7f434807f41_iv -in travis_keys.tar.enc -out travis_keys.tar -d
-# - tar -x -f travis_keys.tar
-# - cat travis_key.pub >> ~/.ssh/authorized_keys
-# - chmod 600 travis_key
-# # Open SSH tunnel
-# - ssh -R 9999:localhost:22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=yes -i travis_key travisci@${BOUNCE_HOST}
